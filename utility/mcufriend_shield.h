@@ -282,9 +282,9 @@ void write_8(uint8_t val)
 #elif defined(__SAMD51P20A__)      //regular UNO shield on GRAND CENTRAL M4
 //LCD pins  |D7  |D6  |D5  |D4  |D3  |D2  |D1  |D0 | |RD |WR |RS |CS |RST|
 //MK20 pin  |PD21|PD20|PC21|PC20|PC19|PC18|PB18|PB2| |PA2|PA5|PB3|PC0|PC1|
-#define WRITE_DELAY { WR_ACTIVE4; }
-#define IDLE_DELAY  { WR_IDLE; }
-#define READ_DELAY  { RD_ACTIVE8;}
+#define WRITE_DELAY { WR_ACTIVE8; }
+#define IDLE_DELAY  { WR_IDLE4; }
+#define READ_DELAY  { RD_ACTIVE16;}
  // configure macros for the control pins
 #define RD_PORT PORT->Group[0]
 #define RD_PIN  2
@@ -333,7 +333,7 @@ void write_8(uint8_t val)
 					  }
 #define write8(x)     { write_8(x); WRITE_DELAY; WR_STROBE; IDLE_DELAY; }
 #define write16(x)    { uint8_t h = (x)>>8, l = x; write8(h); write8(l); }
-#define READ_8(dst)   { RD_STROBE; READ_DELAY; dst = read_8(); RD_IDLE; RD_IDLE; }
+#define READ_8(dst)   { RD_STROBE; READ_DELAY; dst = read_8(); RD_IDLE2; RD_IDLE; }
 #define READ_16(dst)  { uint8_t hi; READ_8(hi); READ_8(dst); dst |= (hi << 8); }
 
  // Shield Control macros.
